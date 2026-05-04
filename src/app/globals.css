@@ -1,0 +1,43 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Jost:wght@300;400;500;600&display=swap');
+
+@layer base {
+  :root {
+    --gold-gradient: linear-gradient(135deg, #d4a017 0%, #f5de8f 50%, #d4a017 100%);
+    --jewel-gradient: linear-gradient(135deg, #1a1208 0%, #3d2b0f 100%);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'Jost', system-ui, sans-serif; background-color: #fdfaf3; color: #1a1208; }
+  h1,h2,h3,h4,h5 { font-family: 'Cormorant Garamond', Georgia, serif; }
+}
+
+@layer components {
+  .btn-gold {
+    @apply inline-flex items-center justify-center gap-2 px-6 py-3 bg-gold-500 hover:bg-gold-600 text-white font-medium text-sm tracking-wider uppercase transition-all duration-300 cursor-pointer;
+  }
+  .btn-dark {
+    @apply inline-flex items-center justify-center gap-2 px-6 py-3 bg-jewel-dark hover:bg-black text-white font-medium text-sm tracking-wider uppercase transition-all duration-300 cursor-pointer;
+  }
+  .btn-outline {
+    @apply inline-flex items-center justify-center gap-2 px-6 py-3 border border-jewel-dark text-jewel-dark hover:bg-jewel-dark hover:text-white font-medium text-sm tracking-wider uppercase transition-all duration-300 cursor-pointer;
+  }
+  .section-pad { @apply py-16 px-4 md:py-24; }
+  .container-main { @apply max-w-7xl mx-auto px-4; }
+  .card-product {
+    @apply bg-white border border-gold-100 overflow-hidden group cursor-pointer transition-all duration-300 hover:shadow-lg;
+  }
+  .input-field {
+    @apply w-full border border-gray-200 px-4 py-3 text-sm focus:outline-none focus:border-gold-500 bg-white transition-colors;
+  }
+  .label-field { @apply block text-xs font-medium text-gray-600 mb-1 uppercase tracking-wide; }
+  .admin-card { @apply bg-white border border-gray-100 p-6 shadow-sm; }
+  .shimmer {
+    background: linear-gradient(90deg, #f8f1e0 25%, #faefc8 50%, #f8f1e0 75%);
+    background-size: 200% 100%;
+    animation: shimmer 2s linear infinite;
+  }
+}
