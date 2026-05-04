@@ -1,0 +1,136 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Admin {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  passwordHash String
+  name         String
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model Category {
+  id          String    @id @default(cuid())
+  name        String
+  slug        String    @unique
+  description String?
+  imageUrl    String?
+  order       Int       @default(0)
+  isVisible   Boolean   @default(true)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  products    Product[]
+}
+
+enum MetalType {
+  GOLD_24K
+  GOLD_22K
+  GOLD_18K
+  PLATINUM
+  SILVER
+  DIAMOND
+  GEMSTONE
+  MIXED
+}
+
+model Product {
+  id               String         @id @default(cuid())
+  sku              String         @unique
+  name             String
+  slug             String         @unique
+  description      String?
+  weight           Float?
+  metalType        MetalType      @default(GOLD_22K)
+  price            Float?
+  showPrice        Boolean        @default(false)
+  isTopTrending    Boolean        @default(false)
+  isNewArrival     Boolean        @default(false)
+  isSpecialSelection Boolean      @default(false)
+  isVisible        Boolean        @default(true)
+  categoryId       String
+  category         Category       @relation(fields: [categoryId], references: [id])
+  images           ProductImage[]
+  createdAt        DateTime       @default(now())
+  updatedAt        DateTime       @updatedAt
+}
+
+model ProductImage {
+  id        String   @id @default(cuid())
+  url       String
+  alt       String?
+  isPrimary Boolean  @default(false)
+  order     Int      @default(0)
+  productId String
+  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+}
+
+model MetalRate {
+  id          String   @id @default(cuid())
+  metalType   String   // "GOLD_24K" | "GOLD_22K"
+  ratePerGram Float
+  lastUpdated DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Testimonial {
+  id           String   @id @default(cuid())
+  customerName String
+  location     String
+  reviewText   String
+  rating       Int      @default(5)
+  order        Int      @default(0)
+  isVisible    Boolean  @default(true)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model Service {
+  id                  String   @id @default(cuid())
+  title               String
+  shortDescription    String
+  detailedDescription String?
+  icon                String?
+  imageUrl            String?
+  order               Int      @default(0)
+  isVisible           Boolean  @default(true)
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+}
+
+model BlogPost {
+  id          String   @id @default(cuid())
+  title       String
+  slug        String   @unique
+  excerpt     String?
+  content     String
+  coverImage  String?
+  publishedAt DateTime?
+  isPublished Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Enquiry {
+  id         String   @id @default(cuid())
+  name       String
+  email      String
+  phone      String?
+  message    String
+  interest   String?
+  isRead     Boolean  @default(false)
+  createdAt  DateTime @default(now())
+}
+
+model Setting {
+  id        String   @id @default(cuid())
+  key       String   @unique
+  value     String
+  updatedAt DateTime @updatedAt
+}
